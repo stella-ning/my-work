@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/jquery.min.js"></script>
+    <script src="./js/flexible.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+    <title>通讯录</title>
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/tree.css" />
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js" type="text/javascript" charset="utf-8"></script>
+    <script src="json/content.json" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="js/comboTreePlugin.js"></script>
+    <script src="./js/index.js"></script>
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <ul class="flex searchAll justify-content-center">
+            <li class="align-center flex">
+                <i class="inline-block mr3">姓名：</i>
+                <input class="searchInp name" placeholder="请输入姓名" />
+            </li>
+            <li class="align-center flex">
+                <i class="inline-block mr3">工号：</i>
+                <input class="searchInp jobNo" placeholder="请输入工号" />
+            </li>
+            <li class="align-center flex">
+                <i class="inline-block mr3">部门：</i>
+                <div id="justAnInputBox1" class="select-tree-wrap inline-block department"></div>
+            </li>
+            <li class="align-center flex">
+                <i class="inline-block mr3">邮箱：</i>
+                <input class="searchInp email" placeholder="请输入邮箱" />
+            </li>
+        </ul>
+        <!--<div id="justAnInputBox2" class="select-tree-wrap"></div>-->
+        <div class="flex justify-content-center search">
+            <button class="find cursor" onclick="search()">查询</button>
+            <button class="reset cursor" onclick="reset()">重置</button>
+        </div>
+    </div>
+    <!-- 右侧|字母列表 -->
+    <ul id="letters">
+        <li class="letter-item">A</li>
+        <li class="letter-item">B</li>
+        <li class="letter-item">C</li>
+        <li class="letter-item">D</li>
+        <li class="letter-item">E</li>
+        <li class="letter-item">F</li>
+        <li class="letter-item">G</li>
+        <li class="letter-item">H</li>
+        <li class="letter-item">I</li>
+        <li class="letter-item">J</li>
+        <li class="letter-item">K</li>
+        <li class="letter-item">L</li>
+        <li class="letter-item">M</li>
+        <li class="letter-item">N</li>
+        <li class="letter-item">O</li>
+        <li class="letter-item">P</li>
+        <li class="letter-item">Q</li>
+        <li class="letter-item">R</li>
+        <li class="letter-item">S</li>
+        <li class="letter-item">T</li>
+        <li class="letter-item">U</li>
+        <li class="letter-item">V</li>
+        <li class="letter-item">W</li>
+        <li class="letter-item">X</li>
+        <li class="letter-item">Y</li>
+        <li class="letter-item">Z</li>
+    </ul>
+    <!-- 人名单列表 -->
+    <div class="list-container" id="top">
+        <div id="namesList">
+
+        </div>
+    </div>
+    <a href="#namesList" style="display: block;" class="ant-back-top">
+        <div class="">
+            <div class="ant-back-top-content">
+                <div class="ant-back-top-icon"><span role="img" aria-label="vertical-align-top" class="anticon anticon-vertical-align-top"><svg viewBox="64 64 896 896" focusable="false" class="" data-icon="vertical-align-top" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M859.9 168H164.1c-4.5 0-8.1 3.6-8.1 8v60c0 4.4 3.6 8 8.1 8h695.8c4.5 0 8.1-3.6 8.1-8v-60c0-4.4-3.6-8-8.1-8zM518.3 355a8 8 0 00-12.6 0l-112 141.7a7.98 7.98 0 006.3 12.9h73.9V848c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V509.7H624c6.7 0 10.4-7.7 6.3-12.9L518.3 355z"></path></svg></span></div>
+            </div>
+        </div>
+    </a>
+</body>
+
+</html>
+<!--handlebars模版渲染页面-->
+<script id="people-template" type="text/x-handlebars-template">
+    {{#each directories}}
+    <dl class="list">
+        <dt id={{lowercase}}>{{uppercase}}</dt>
+        <dd>
+            <table border="0" cellspacing="" cellpadding="">
+                <thead>
+                    <tr>
+                        <td>姓名</td>
+                        <td>工号</td>
+                        <td>部门</td>
+                        <td>手机号</td>
+                        <td>办公室电话</td>
+                        <td>邮箱</td>
+                        <td>上级</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each data}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{jobNo}}</td>
+                        <td>{{department}}</td>
+                        <td>{{phone}}</td>
+                        <td>{{telephone}}</td>
+                        <td>{{email}}</td>
+                        <td>{{superior}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+
+            </table>
+            </table>
+        </dd>
+    </dl>
+    {{/each}}
+</script>
+<script type="text/javascript">
+    // $.ajax({
+    // 	url: '',
+    // 	type: 'post',
+    // 	contentType : "application/json;charset=utf-8",
+    // 	dataType:'json',
+    // 	success: function(data) {
+    //
+    // 	}
+    // });
+    SampleJSONData.forEach(function (item, i) {
+        item.subs.forEach(function (_item, _i) {
+            _item.parentId = item.id
+            _item.parentName = item.title
+        })
+    })
+    let aaa = $('#justAnInputBox1').comboTree({
+        source: SampleJSONData,
+        isMultiple: false,
+        isFirstClassSelectable: false, //第一级是否可选
+        cascadeSelect: true,
+        selectedlength: 3 //最多可选
+    });
+</script>
